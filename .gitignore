@@ -1,0 +1,8 @@
+# Go binaries
+proyecto-lfsrsoft/backend/lfsr-backend
+proyecto-lfsrsoft/backend/lfsr-backend-test
+
+# Node
+proyecto-lfsrsoft/frontend/node_modules/
+proyecto-lfsrsoft/frontend/.next/
+proyecto-lfsrsoft/frontend/.env.local

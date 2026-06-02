@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lfsr-backend
+  namespace: lfsrsoft
+  labels:
+    app: lfsr-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lfsr-backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: lfsr-backend
+    spec:
+      serviceAccountName: licencia-generator-sa
+      imagePullSecrets:
+        - name: docker-credentials
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox:1.36
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "Esperando que PostgreSQL este disponible..."
+              until nc -z 10.97.158.5 5432 2>/dev/null; do
+                echo "Reintentando en 3s..."
+                sleep 3
+              done
+              echo "PostgreSQL listo."
+      containers:
+        - name: lfsr-backend
+          image: docker.io/uriel0331dls/lfsr-backend:v1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: "10.97.158.5"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_NAME
+            - name: AES_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: AES_KEY
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"

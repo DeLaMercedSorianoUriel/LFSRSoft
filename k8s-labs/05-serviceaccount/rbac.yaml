@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: licencia-generator-sa
+  namespace: lfsrsoft
+  labels:
+    app: lfsr-backend
+automountServiceAccountToken: true
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: licencia-reader-role
+  namespace: lfsrsoft
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: licencia-generator-binding
+  namespace: lfsrsoft
+subjects:
+  - kind: ServiceAccount
+    name: licencia-generator-sa
+    namespace: lfsrsoft
+roleRef:
+  kind: Role
+  name: licencia-reader-role
+  apiGroup: rbac.authorization.k8s.io

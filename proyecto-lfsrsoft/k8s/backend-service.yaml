@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lfsr-backend-service
+  namespace: lfsrsoft
+  labels:
+    app: lfsr-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: lfsr-backend
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
