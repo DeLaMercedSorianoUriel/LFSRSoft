@@ -37,7 +37,7 @@ spec:
               echo "PostgreSQL listo."
       containers:
         - name: lfsr-backend
-          image: docker.io/uriel0331dls/lfsr-backend:v1
+          image: docker.io/uriel0331dls/lfsr-backend:v5
           ports:
             - containerPort: 8080
           env:

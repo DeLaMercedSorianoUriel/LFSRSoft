@@ -6,3 +6,6 @@ proyecto-lfsrsoft/backend/lfsr-backend-test
 proyecto-lfsrsoft/frontend/node_modules/
 proyecto-lfsrsoft/frontend/.next/
 proyecto-lfsrsoft/frontend/.env.local
+*.tar.gz
+*.tar
+*.zip

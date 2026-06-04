@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lfsr-app
+  namespace: demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lfsr-app
+  template:
+    metadata:
+      labels:
+        app: lfsr-app
+    spec:
+      containers:
+      - name: lfsr-app
+        image: uriel0331dls/lfsr-app:v1
+        ports:
+        - containerPort: 80
