@@ -137,13 +137,13 @@ kubectl apply -f argocd-application.yaml
 
 ## Stack tecnologico
 
-**Infraestructura:** Kubernetes 1.28 · Rocky Linux 9.7 · Ansible · Flannel CNI · NFS CSI Driver · VMware Workstation
+**Infraestructura:** Kubernetes 1.28 · Rocky Linux 9.7 · Ansible · NFS CSI Driver · VMware Workstation
 
 **Aplicacion:** Go 1.24 · Fiber v2 · Next.js 14 · PostgreSQL 15 · AES-256 GCM · UUID v4
 
 **Observabilidad:** Prometheus · Grafana · Loki · Promtail · Node Exporter · Kube State Metrics
 
-**CI/CD:** Tekton Pipelines · ArgoCD · Kaniko · GitHub · Docker Hub
+**CI/CD:** ArgoCD · GitHub · Docker Hub
 
 ---
 
