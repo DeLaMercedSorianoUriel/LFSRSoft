@@ -24,7 +24,7 @@ spec:
         - name: docker-credentials
       containers:
         - name: lfsr-frontend
-          image: docker.io/uriel0331dls/lfsr-frontend:v5
+          image: docker.io/uriel0331dls/lfsr-frontend:v6
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
